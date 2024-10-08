@@ -1,0 +1,106 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Scanner;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(System.in);
+
+        String[] list = readFile4();
+        String [] reverse = reverse(list);
+        writeFile4(reverse);
+
+    }
+    public static String[] readFile() throws FileNotFoundException {
+        String[] verseArray = new String[4];
+        File read = new File("AlmaMater.txt");
+        int count = 0;
+        try (Scanner in = new Scanner(read)){
+            while (in.hasNextLine()){
+                verseArray[count] = in.nextLine();
+                count++;
+            }
+        } catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        verseArray = almaMaterCompleteFirstVerse(verseArray);
+        return verseArray;
+    }
+
+    public static String [] almaMaterCompleteFirstVerse (String [] firstVerse){
+        firstVerse [2] = "For the future that we wait,";
+        firstVerse[3] = "Raise the song, raise the song.";
+        return firstVerse;
+    }
+
+    public static void writeFile(String[] dataToWrite) throws FileNotFoundException {
+        try (PrintWriter out = new PrintWriter("AlmaMaterOut.txt")){
+            for (int i = 0; i < dataToWrite.length; i++){
+                out.println(dataToWrite[i]);
+            }
+        }
+    }
+    //------------------------------------------------------------
+    public static ArrayList<String> readFile3(String fileName) throws FileNotFoundException {
+        ArrayList<String> list = new ArrayList<>();
+        File read = new File(fileName);
+        try (Scanner in = new Scanner(read)){
+            while (in.hasNextLine()){
+                list.add(in.nextLine());
+            }
+        } catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public static void writeFile3(ArrayList<String> dataToWrite, String fileName){
+        int count = 1;
+        try (PrintWriter out = new PrintWriter(fileName)) {
+            for (int i = 0; i < dataToWrite.size(); i++){
+                out.println("/* " + count + " */" + dataToWrite.get(i));
+                count++;
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //-------------------------------------------------------------------------------
+    public static String[] readFile4 () throws FileNotFoundException {
+        String [] list = new String[4];
+        String fileName = "maryLambOut.txt";
+        File read = new File(fileName);
+        int count = 0;
+        try (Scanner in = new Scanner(read)){
+            while (in.hasNextLine()){
+                list[count] = in.nextLine();
+                count++;
+            }
+        } catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public static void writeFile4(String[] dataToWrite){
+        try (PrintWriter out = new PrintWriter("Output.txt")){
+            for (int i = 0; i < dataToWrite.length; i++){
+                out.println(dataToWrite[i]);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String[] reverse(String [] list){
+        String [] reverse = new String[list.length];
+        for (int i = 0; i < list.length; i++){
+            reverse[i] = list[list.length - 1 - i];
+        }
+        return reverse;
+    }
+
+}
